@@ -1,0 +1,38 @@
+version: "2"
+services:
+  web:
+    image: 'mrunal4/qbank-gstudio'
+    restart: always
+    build: . 
+    volumes:
+      - ./docker_data/certs/assessments-clix.tiss.edu:/etc/ssl/assessments-clix.tiss.edu
+      - .:/qbank
+    command: >
+      /bin/bash -c 'python main.py'
+    ports:
+      - "8080:8080"
+    links:
+      - mongo:mongodb
+    depends_on:
+      - mongo
+      - memcache
+  mongo:
+    image: 'mongo:3.2.4'
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - ./docker_data/data/db:/data/db
+  memcache:
+    image: 'memcached'
+    restart: always
+
+
+# Imp instruction: In case you need to add network just add below 2 lines inside every service blocks (like image )
+  # networks:
+  #   - qbank-network
+
+# Imp instruction: In case you need to add network just uncomment below 3 lines
+# networks:
+#   qbank-network:
+#       driver: bridge

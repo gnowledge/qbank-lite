@@ -27,6 +27,11 @@ FILESYSTEM_ASSET_CONTENT_TYPE = Type(**
                                          'identifier': 'filesystem'
                                      })
 
+# Mrunal : Thu Jan 25 16:44:36 IST 2018 : For docker-compose - linking of containers
+#   Also added respective snippet in "JSON_1" block as suggested by Cole(cjshaw) in slack - general channel
+MONGO_HOST_URI="mongodb:27017"
+CACHING_HOST_URI="memcache:11211"
+
 ###################################################
 # PRODUCTION SETTINGS
 ###################################################
@@ -74,7 +79,7 @@ FILESYSTEM_ADAPTER_1 = {
             'displayName': 'Hostname config for serving files over the network',
             'description': 'Hostname config for serving files.',
             'values': [
-                {'value': 'https://clixserver.tiss.edu:8080/api/v1', 'priority': 1}  # Mac
+                {'value': 'https://assessments-clix.tiss.edu:8080/api/v1', 'priority': 1}  # Mac
             ]
         },
     }
@@ -286,6 +291,22 @@ JSON_1 = {
             'description': 'Use the filesystem instead of MongoDB',
             'values': [
                 {'value': False, 'priority': 1}
+            ]
+        },
+        'mongoHostURI': {
+            'syntax': 'STRING',
+            'displayName': 'Mongo Host URI',
+            'description': 'URI for setting the MongoClient host.',
+            'values': [
+                {'value': MONGO_HOST_URI, 'priority': 1}
+            ]
+        },
+        'cachingHostURI': {
+            'syntax': 'STRING',
+            'displayName': 'Caching - memcache Host URI',
+            'description': 'URI for setting the CachingClient - memcache host.',
+            'values': [
+                {'value': CACHING_HOST_URI, 'priority': 1}
             ]
         },
     }
