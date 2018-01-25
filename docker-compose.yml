@@ -1,11 +1,11 @@
 version: "2"
 services:
   web:
-    image: 'mrunal4/qbank-gstudio'
+    image: 'qbank-gstudio'
     restart: always
     build: . 
     volumes:
-      - ./docker_data/certs/assessments-clix.tiss.edu:/etc/ssl/assessments-clix.tiss.edu
+      - /docker_data/qbank-lite/certs/assessments-clix.tiss.edu:/etc/ssl/assessments-clix.tiss.edu
       - .:/qbank
     command: >
       /bin/bash -c 'python main.py'
@@ -22,7 +22,7 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - ./docker_data/data/db:/data/db
+      - /docker_data/qbank-lite/data/db:/data/db
   memcache:
     image: 'memcached'
     restart: always
