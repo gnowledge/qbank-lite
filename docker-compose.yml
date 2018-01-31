@@ -1,11 +1,23 @@
 version: "2"
+
 services:
   web:
     image: 'qbank-gstudio'
     restart: always
+    environment:
+      - TERM=xterm
+      - LETSENCRYPT_EMAIL=mrunal.nachankar@tiss.edu
+      - LETSENCRYPT_HOST=assessments-clix.tiss.edu
+      - VIRTUAL_HOST=assessments-clix.tiss.edu
+      - VIRTUAL_PROTO=https
+      - VIRTUAL_PORT=8080
+    hostname: 'assessments-clix.tiss.edu'
+    expose:
+      - "8080"
     build: . 
     volumes:
-      - /docker_data/qbank-lite/certs/assessments-clix.tiss.edu:/etc/ssl/assessments-clix.tiss.edu
+      - /home/core/data/nginx-proxy/certs/:/etc/ssl/assessments-clix.tiss.edu
+      - /home/core/data/qbank-lite/webapps:/qbank/webapps
       - .:/qbank
     command: >
       /bin/bash -c 'python main.py'
@@ -22,17 +34,12 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
-      - /docker_data/qbank-lite/data/db:/data/db
+      - /home/core/data/qbank-lite/data/db:/data/db
   memcache:
     image: 'memcached'
     restart: always
 
-
-# Imp instruction: In case you need to add network just add below 2 lines inside every service blocks (like image )
-  # networks:
-  #   - qbank-network
-
-# Imp instruction: In case you need to add network just uncomment below 3 lines
-# networks:
-#   qbank-network:
-#       driver: bridge
+networks:
+  default:
+    external:
+      name: assessments-bridge-network
