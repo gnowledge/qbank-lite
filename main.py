@@ -56,7 +56,7 @@ class index:
 
 class version:
     def GET(self):
-        return '3.15.4'
+        return '3.15.10'
 
 
 class video_test:
@@ -73,6 +73,7 @@ def is_test():
     if 'WEBPY_ENV' in os.environ:
         return os.environ['WEBPY_ENV'] == 'test'
     return False
+
 
 if (not is_test()) and __name__ == "__main__":
     app.run()
