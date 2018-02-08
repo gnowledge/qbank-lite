@@ -1,11 +1,46 @@
-version: "3"
+version: "2"
 services:
   web:
+    image: 'qbank-gstudio'
+    restart: always
+    environment:
+      - TERM=xterm
+#      - LETSENCRYPT_EMAIL=mrunal.nachankar@tiss.edu
+#      - LETSENCRYPT_HOST=assessments-clix.tiss.edu
+#      - VIRTUAL_HOST=assessments-clix.tiss.edu
+#      - VIRTUAL_PROTO=https
+#      - VIRTUAL_PORT=8080
+    hostname: 'assessments-clix.tiss.edu'
+#    expose:
+#      - "8080"
     build: . 
     volumes:
+      - /home/core/data/qbank-lite/certs/:/etc/ssl/assessments-clix.tiss.edu
+      - /home/core/data/nginx-proxy/certs/:/etc/ssl/assessments-clix.tiss.edu
       - .:/qbank
+      - /home/core/data/qbank-lite/webapps:/qbank/webapps
     command: >
-      /bin/bash -c '
-      python main.py'
+      /bin/bash -c 'python main.py'
     ports:
       - "8080:8080"
+    links:
+      - mongo:mongodb
+    depends_on:
+      - mongo
+      - memcache
+  mongo:
+    image: 'mongo:3.2.4'
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - /home/core/data/qbank-lite/data/db:/data/db
+  memcache:
+    image: 'memcached'
+    restart: always
+
+networks:
+  default:
+    external:
+      name: qbank-oac-oat-bridge-network
+

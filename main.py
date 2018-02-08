@@ -20,8 +20,11 @@ else:
 
 CherryPyWSGIServer.ssl_certificate_chain = ''
 try:
-    CherryPyWSGIServer.ssl_certificate = "{0}/unplatform/unplatform.cert.dummy.pem".format(sys._MEIPASS)
-    CherryPyWSGIServer.ssl_private_key = "{0}/unplatform/unplatform.key.dummy.pem".format(sys._MEIPASS)
+    # CherryPyWSGIServer.ssl_certificate = "{0}/unplatform/unplatform.cert.dummy.pem".format(sys._MEIPASS)
+    # CherryPyWSGIServer.ssl_private_key = "{0}/unplatform/unplatform.key.dummy.pem".format(sys._MEIPASS)
+    # Mrunal : Thu Jan 25 16:44:36 IST 2018 : Changed the path and names of cert files as per domain (assessments-clix.tiss.edu)
+    CherryPyWSGIServer.ssl_certificate = "/etc/ssl/assessments-clix.tiss.edu/assessments-clix.tiss.edu.crt"
+    CherryPyWSGIServer.ssl_private_key = "/etc/ssl/assessments-clix.tiss.edu/assessments-clix.tiss.edu.key"
 except AttributeError:
     CherryPyWSGIServer.ssl_certificate = "{0}/unplatform/unplatform.cert.dummy.pem".format(ABS_PATH)
     CherryPyWSGIServer.ssl_private_key = "{0}/unplatform/unplatform.key.dummy.pem".format(ABS_PATH)
