@@ -272,7 +272,7 @@ JSON_1 = {
             'displayName': 'Flag to configure caching engine',
             'description': 'Flag to configure caching engine',
             'values': [
-                {'value': 'diskcache', 'priority': 1}  # can be either "memcache" or "diskcache"
+                {'value': 'memcache', 'priority': 1}  # can be either "memcache" or "diskcache"
             ]
         },
         'dataStorePath': {
