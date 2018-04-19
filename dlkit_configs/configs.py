@@ -304,7 +304,7 @@ JSON_1 = {
             'displayName': 'Use direct AssetContentLookup for FilesRecord map',
             'description': 'Bypasses any catalog-hierarchy based authorization for (Asset) AssetContent lookup',
             'values': [
-                {'value': False, 'priority': 1}
+                {'value': True, 'priority': 1}
             ]
         },
     }
